@@ -5,10 +5,15 @@ project(imgui
         VERSION 1.83.0
         )
 
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY lib)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY lib)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY bin)
+
 include(CMakeDependentOption)
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
 include(loaders_and_platforms)
+include(install_target)
 
 # add options for supported loaders
 list_loaders_options(LOADERS GLAD
@@ -65,3 +70,25 @@ add_subdirectory(backends)
 
 # examples
 add_subdirectory(examples)
+
+# general installation
+include(CMakePackageConfigHelpers)
+
+# PROJECT_VERSION is used by default
+write_basic_package_version_file(${PROJECT_NAME}ConfigVersion.cmake
+        COMPATIBILITY SameMajorVersion # TODO: check compatibility
+        )
+configure_package_config_file(cmake/Config.cmake.in ${PROJECT_NAME}Config.cmake
+        INSTALL_DESTINATION lib/cmake/${PROJECT_NAME}
+        )
+
+install_target(core ${PROJECT_NAME}Targets)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake
+        ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake
+        DESTINATION lib/cmake/${PROJECT_NAME}
+        )
+install(EXPORT ${PROJECT_NAME}Targets
+        FILE ${PROJECT_NAME}Targets.cmake
+        NAMESPACE imgui::
+        DESTINATION lib/cmake/${PROJECT_NAME}
+        )
