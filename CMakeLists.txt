@@ -5,25 +5,27 @@ project(imgui
         VERSION 1.83.0
         )
 
-# TODO: macro for a list optional of loaders and default loader deduction
-# TODO: naming conventions
-# TODO: logic for default loader
+include(CMakeDependentOption)
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+
+include(loaders_and_platforms)
+
+# add options for supported loaders
+list_loaders_options(LOADERS GLAD
+        OUT AVAILABLE_LOADERS)
+
+# TODO: choose default loader
 set(DEFAULT_LOADER "GLAD" CACHE STRING "Default OpenGL loader to be used in backends")
 set_property(CACHE DEFAULT_LOADER PROPERTY STRINGS GLAD)
 message(STATUS "Using default loader: ${DEFAULT_LOADER}")
 
-# TODO: list of options for Loaders
-include(CMakeDependentOption)
+# add options for supported platforms
+list_platforms_options(PLATFORMS
+        GLFW3
+        SDL2
+        )
 
-cmake_dependent_option(USE_GLAD "Use GLAD loader" ON
-        "${DEFAULT_LOADER} STREQUAL GLAD" OFF)
-if (${USE_GLAD})
-    message(STATUS "Using loader: GLAD")
-endif()
-
-# list of loaders:
-
-# TODO: add options for platforms
+# TODO: default platform?
 
 add_library(core STATIC
         include/imgui/imgui.h
