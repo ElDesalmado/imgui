@@ -16,5 +16,6 @@ if (TARGET glfw)
                 $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
                 $<INSTALL_INTERFACE:include>
             )
-    add_library(imgui::glfw ALIAS imgui_glfw)
+    add_library(imgui::imgui_glfw ALIAS imgui_glfw)
+    install_target(imgui_glfw ${PROJECT_NAME}Targets)
 endif()
