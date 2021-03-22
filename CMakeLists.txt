@@ -12,6 +12,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY bin)
 include(CMakeDependentOption)
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
+# custom scripts in ./cmake
 include(loaders_and_platforms)
 include(install_target)
 
@@ -19,12 +20,20 @@ include(install_target)
 list_loaders_options(LOADERS GLAD
         OUT AVAILABLE_LOADERS)
 
-get_default_loader(default_loader ${AVAILABLE_LOADERS})
+get_default_loader(default_loader
+        LIST_LOADERS ${AVAILABLE_LOADERS})
 
-# TODO: choose default loader
 set(DEFAULT_LOADER "${default_loader}" CACHE STRING "Default OpenGL loader to be used in backends")
 set_property(CACHE DEFAULT_LOADER PROPERTY STRINGS ${AVAILABLE_LOADERS})
+
+# assert default loader
+if (${DEFAULT_LOADER} STREQUAL "NONE")
+    message(FATAL_ERROR "No default loader specified or detected!")
+endif()
+
+# TODO: fix this message
 message(STATUS "Using default loader: ${DEFAULT_LOADER}")
+
 
 # add options for supported platforms
 list_platforms_options(PLATFORMS
