@@ -90,5 +90,6 @@ install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake
 install(EXPORT ${PROJECT_NAME}Targets
         FILE ${PROJECT_NAME}Targets.cmake
         NAMESPACE imgui::
+        COMPONENT dev
         DESTINATION lib/cmake/${PROJECT_NAME}
         )

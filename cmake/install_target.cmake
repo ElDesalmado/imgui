@@ -2,6 +2,7 @@
 function(install_target TARGET EXPORT_NAME)
     install(TARGETS ${TARGET}
             EXPORT ${EXPORT_NAME}
+            COMPONENT dev
             LIBRARY DESTINATION lib
             ARCHIVE DESTINATION lib
             RUNTIME DESTINATION bin
