@@ -23,8 +23,7 @@ endif()
 
 # list of loaders:
 
-# USE_GLAD
-# TODO: allow custom loaders
+# TODO: add options for platforms
 
 add_library(core STATIC
         include/imgui/imgui.h

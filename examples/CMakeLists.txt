@@ -1,2 +1,3 @@
 ﻿
 add_subdirectory(example_glfw_opengl3)
+add_subdirectory(example_sdl_opengl3)
