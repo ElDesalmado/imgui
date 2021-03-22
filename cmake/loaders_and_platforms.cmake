@@ -64,3 +64,18 @@ function(list_platforms_options)
 
     set(${_OUT} ${${_OUT}} PARENT_SCOPE)
 endfunction()
+
+function(get_default_loader OUT_LOADER LIST_LOADERS)
+    # default error value
+    set(${OUT_LOADER} "")
+    # TODO: default loader for android/GLES (LOADER_NONE)
+    # TODO: default loader for emscripten (LOADER_NONE)
+
+    # if loaders list is not empty, get the first loader as default
+    if (${LIST_LOADERS})
+        list(GET ${LIST_LOADERS} ${OUT_LOADER})
+    else()
+    endif()
+
+    set(${OUT_LOADER} ${OUT_LOADER} PARENT_SCOPE)
+endfunction()
