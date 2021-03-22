@@ -19,5 +19,6 @@ if (TARGET SDL2::SDL2)
 
     # TODO: another approach? otherwise undefined reference to 'WinMain'
     target_compile_definitions(imgui_sdl2 PUBLIC SDL_MAIN_HANDLED)
-    add_library(imgui::sdl2 ALIAS imgui_sdl2)
+    add_library(imgui::imgui_sdl2 ALIAS imgui_sdl2)
+    install_target(imgui_sdl2 ${PROJECT_NAME}Targets)
 endif()
