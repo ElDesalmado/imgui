@@ -1,12 +1,13 @@
 ﻿
+# TODO: move to main cmake
 find_package(GLFW3 CONFIG)
 if (${USE_GLFW})
     find_package(GLFW3 CONFIG REQUIRED)
 endif()
 if (TARGET glfw)
+    # TODO: move to main cmake
     message(STATUS "Using GLFW implementation")
 
-    # TODO: support for shared libs?
     add_library(imgui_glfw STATIC
             include/imgui/glfw/imgui_impl_glfw.h
             imgui_impl_glfw.cpp
