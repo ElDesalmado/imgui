@@ -7,7 +7,10 @@ function(install_target TARGET EXPORT_NAME)
             ARCHIVE DESTINATION lib
             RUNTIME DESTINATION bin
             )
-    install(DIRECTORY $<TARGET_PROPERTY:${TARGET},SOURCE_DIR>/include
-            DESTINATION ${CMAKE_INSTALL_PREFIX}
-            )
+    get_target_property(type ${TARGET} TYPE)
+    if (NOT ${type} STREQUAL INTERFACE_LIBRARY)
+        install(DIRECTORY $<TARGET_PROPERTY:${TARGET},SOURCE_DIR>/include
+                DESTINATION ${CMAKE_INSTALL_PREFIX}
+                )
+    endif()
 endfunction()
