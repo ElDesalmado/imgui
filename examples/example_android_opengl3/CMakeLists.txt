@@ -14,7 +14,7 @@ add_library(${CMAKE_PROJECT_NAME} SHARED
         ../../src/imgui_tables.cpp
         ../../src/imgui_widgets.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/../../backends/imgui_impl_android.cpp
-        ../../backends/loaders/opengl3/imgui_impl_opengl3.cpp
+        ../../backends/renderers/opengl3/imgui_impl_opengl3.cpp
   ${ANDROID_NDK}/sources/android/native_app_glue/android_native_app_glue.c
 )
 

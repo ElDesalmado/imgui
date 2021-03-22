@@ -5,14 +5,14 @@ project(imgui
         VERSION 1.83.0
         )
 
-# TODO: macro for a list of loaders and default loader deduction
+# TODO: macro for a list optional of loaders and default loader deduction
 # TODO: naming conventions
-# TODO: option for default loader
+# TODO: logic for default loader
 set(DEFAULT_LOADER "GLAD" CACHE STRING "Default OpenGL loader to be used in backends")
 set_property(CACHE DEFAULT_LOADER PROPERTY STRINGS GLAD)
-
 message(STATUS "Using default loader: ${DEFAULT_LOADER}")
 
+# TODO: list of options for Loaders
 include(CMakeDependentOption)
 
 cmake_dependent_option(USE_GLAD "Use GLAD loader" ON
@@ -48,6 +48,7 @@ target_include_directories(core
             src
         )
 
+# TODO: this should not be propagated to user's libs
 target_compile_features(core PUBLIC cxx_std_11)
 
 # compile-time preprocessor should be defined via toolchain file using cmake
@@ -55,14 +56,11 @@ target_compile_features(core PUBLIC cxx_std_11)
 target_compile_definitions(core PUBLIC IMGUI_DISABLE_INCLUDE_IMCONFIG_H)
 set_target_properties(core PROPERTIES CXX_EXTENSIONS OFF)
 
+# core library does not assume a specific loader.
 add_library(imgui::core ALIAS core)
 
 # backends
 add_subdirectory(backends)
 
-# TODO: each example corresponds to a specific backend. Consider moving each example to a corresponding backend folder
 # examples
 add_subdirectory(examples)
-
-# demo
-add_subdirectory(demo)
