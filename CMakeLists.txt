@@ -93,3 +93,9 @@ install(EXPORT ${PROJECT_NAME}Targets
         COMPONENT dev
         DESTINATION lib/cmake/${PROJECT_NAME}
         )
+
+# packaging
+set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE.txt")
+# set(CPACK_RESOURCE_FILE_README "${CMAKE_CURRENT_SOURCE_DIR}/README.md") # TODO: where is README?
+
+include(CPack)
