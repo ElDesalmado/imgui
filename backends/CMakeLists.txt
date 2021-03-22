@@ -1,6 +1,4 @@
 ﻿
-# loaders
-add_subdirectory(loaders)
-
-add_subdirectory(glfw)
+add_subdirectory(renderers)
+add_subdirectory(platform)
 
