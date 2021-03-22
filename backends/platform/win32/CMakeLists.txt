@@ -14,4 +14,5 @@ target_include_directories(imgui_win32
         $<INSTALL_INTERFACE:include>
         )
 
-add_library(imgui::win32 ALIAS imgui_win32)
+add_library(imgui::imgui_win32 ALIAS imgui_win32)
+install_target(imgui_win32 ${PROJECT_NAME}Targets)

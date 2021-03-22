@@ -5,5 +5,5 @@ add_executable(example_sdl2_opengl3 main.cpp)
 target_link_libraries(example_sdl2_opengl3
         PRIVATE
         imgui::imgui_sdl2
-        imgui::opengl3
+        imgui::imgui_opengl3
         )
