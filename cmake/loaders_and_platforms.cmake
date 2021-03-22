@@ -65,17 +65,25 @@ function(list_platforms_options)
     set(${_OUT} ${${_OUT}} PARENT_SCOPE)
 endfunction()
 
-function(get_default_loader OUT_LOADER LIST_LOADERS)
+
+function(get_default_loader OUT_LOADER)
+    set(options "")
+    set(oneValueArgs "")
+    set(multiValueArgs "LIST_LOADERS")
+    cmake_parse_arguments("" "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
+
     # default error value
-    set(${OUT_LOADER} "")
+    set(OUT "NONE")
     # TODO: default loader for android/GLES (LOADER_NONE)
     # TODO: default loader for emscripten (LOADER_NONE)
 
+
     # if loaders list is not empty, get the first loader as default
-    if (${LIST_LOADERS})
-        list(GET ${LIST_LOADERS} ${OUT_LOADER})
+    if (_LIST_LOADERS)
+        list(GET _LIST_LOADERS 0 OUT)
     else()
+        # TODO: try to deduce loader somehow
     endif()
 
-    set(${OUT_LOADER} ${OUT_LOADER} PARENT_SCOPE)
+    set(${OUT_LOADER} "${OUT}" PARENT_SCOPE)
 endfunction()
