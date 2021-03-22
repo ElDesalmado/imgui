@@ -19,9 +19,11 @@ include(install_target)
 list_loaders_options(LOADERS GLAD
         OUT AVAILABLE_LOADERS)
 
+get_default_loader(default_loader ${AVAILABLE_LOADERS})
+
 # TODO: choose default loader
-set(DEFAULT_LOADER "GLAD" CACHE STRING "Default OpenGL loader to be used in backends")
-set_property(CACHE DEFAULT_LOADER PROPERTY STRINGS GLAD)
+set(DEFAULT_LOADER "${default_loader}" CACHE STRING "Default OpenGL loader to be used in backends")
+set_property(CACHE DEFAULT_LOADER PROPERTY STRINGS ${AVAILABLE_LOADERS})
 message(STATUS "Using default loader: ${DEFAULT_LOADER}")
 
 # add options for supported platforms
@@ -31,7 +33,7 @@ list_platforms_options(PLATFORMS
         )
 
 # TODO: default platform?
-
+# core library does not assume a specific loader.
 add_library(core STATIC
         include/imgui/imgui.h
         src/imgui.cpp
@@ -41,6 +43,7 @@ add_library(core STATIC
         src/imgui_widgets.cpp
         src/imgui_demo.cpp # is it necessary to have here?
         )
+add_library(imgui::core ALIAS core)
 
 if(WIN32)
     target_link_libraries(core PRIVATE Imm32)
@@ -61,9 +64,6 @@ target_compile_features(core PUBLIC cxx_std_11)
 # to use imconfig.h explicitly define IMGUI_INCLUDE_IMCONFIG_H
 target_compile_definitions(core PUBLIC IMGUI_DISABLE_INCLUDE_IMCONFIG_H)
 set_target_properties(core PROPERTIES CXX_EXTENSIONS OFF)
-
-# core library does not assume a specific loader.
-add_library(imgui::core ALIAS core)
 
 # backends
 add_subdirectory(backends)
