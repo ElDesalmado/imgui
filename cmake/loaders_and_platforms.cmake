@@ -1,15 +1,17 @@
 ﻿function(add_loader_option LOADER)
+    message(STATUS "Adding option ${LOADER}")
+
     # try to find package
     find_package(${LOADER})
 
-    # TODO: fix this. User should be able to set FALSE for a particular loader
+    string(TOUPPER ${LOADER} loader)
     # if found enable loader by default
-    cmake_dependent_option(USE_${LOADER} "Use ${LOADER} loader" ON
+    cmake_dependent_option(USE_${loader} "Use ${LOADER} loader" ON
             "${LOADER}_FOUND" OFF)
 
     # TODO: search for config first
     # if enabled, assert that package has been found
-    if (USE_${LOADER})
+    if (USE_${loader})
         find_package(${LOADER} REQUIRED)
         message(STATUS "Using loader: ${LOADER}")
     endif()
@@ -23,7 +25,8 @@ function(list_loaders_options)
 
     foreach(LOADER ${_LOADERS})
         add_loader_option(${LOADER})
-        if (USE_${LOADER})
+        string(TOUPPER ${LOADER} loader)
+        if (USE_${loader})
             list(APPEND ${_OUT} ${LOADER})
         endif()
     endforeach()
@@ -36,14 +39,14 @@ function(add_platform_option PLATFORM)
     # try to find package
     find_package(${PLATFORM})
 
-    # TODO: fix this. User should be able to set FALSE for a particular loader
+    string(TOUPPER ${PLATFORM} platform)
     # if found enable loader by default
-    cmake_dependent_option(USE_${PLATFORM} "Use ${PLATFORM} platform" ON
+    cmake_dependent_option(USE_${platform} "Use ${PLATFORM} platform" ON
             "${PLATFORM}_FOUND" OFF)
 
     # TODO: search for config first
     # if enabled, assert that package has been found
-    if (USE_${PLATFORM})
+    if (USE_${platform})
         find_package(${PLATFORM} REQUIRED)
         message(STATUS "Using platform: ${PLATFORM}")
     endif()
@@ -57,7 +60,9 @@ function(list_platforms_options)
 
     foreach(PLATFORM ${_PLATFORMS})
         add_platform_option(${PLATFORM})
-        if (USE_${PLATFORM})
+        string(TOUPPER ${PLATFORM} platform)
+
+        if (USE_${platform})
             list(APPEND ${_OUT} ${PLATFORM})
         endif()
     endforeach()
