@@ -17,7 +17,7 @@ include(loaders_and_platforms)
 include(install_target)
 
 # add options for supported loaders
-list_loaders_options(LOADERS GLAD
+list_loaders_options(LOADERS glad
         OUT AVAILABLE_LOADERS)
 
 get_default_loader(default_loader
@@ -35,9 +35,9 @@ endif()
 message(STATUS "Using default loader: ${DEFAULT_LOADER}")
 
 
-# add options for supported platforms
+# add options for supported platforms. Case matters
 list_platforms_options(PLATFORMS
-        GLFW3
+        glfw3
         SDL2
         )
 
